@@ -7,7 +7,7 @@ function setup(){
     var fftCanvas = createCanvas(710,400);
     fftCanvas.parent(document.getElementById('p5fft'));
 
-    specBar = createGraphics(100,400);
+    specBar = createGraphics(710,30);
     
     noFill();
     stroke(192, 57, 43);
@@ -39,9 +39,10 @@ function draw(){
     }
     endShape();
 
-    specBar.rect(0,(255-maxSpec)/255*height,100,maxSpec/255*height);
-    image(specBar,610,0,100,400);
-    document.getElementById('p5bar').innerHTML = "Max: " + maxSpec;
+    var fixFactor = 1.38;
+    specBar.rect(0,0,maxFre*fixFactor/(spectrum.length)*710,30);
+    image(specBar,0,0,710,30);
+    document.getElementById('p5bar').innerHTML = "Max Amplitude: " + maxSpec;
 }
 
 
