@@ -1,5 +1,9 @@
 var mic, fft, specBar;
+var audioCtx = new AudioContext();
+var mySampleRate = audioCtx.sampleRate;
+var binNum=2048.;
 
+var dF = mySampleRate/binNum;
 
 function setup(){
     colorMode(RGB);
@@ -7,7 +11,7 @@ function setup(){
     var fftCanvas = createCanvas(710,400);
     fftCanvas.parent(document.getElementById('p5fft'));
 
-    specBar = createGraphics(710,30);
+    specBar = createGraphics(400,100);
     
     noFill();
     stroke(192, 57, 43);
@@ -23,7 +27,7 @@ function draw(){
     background(26, 188, 156);
     specBar.background(52, 73, 94);
     specBar.noStroke();
-    specBar.fill(211, 84, 0);
+    specBar.fill(255,255, 51);
 
     var spectrum = fft.analyze();
     var maxSpec = -1;
@@ -39,10 +43,8 @@ function draw(){
     }
     endShape();
 
-    var fixFactor = 1.38;
-    specBar.rect(0,0,maxFre*fixFactor/(spectrum.length)*710,30);
-    image(specBar,0,0,710,30);
-    document.getElementById('p5bar').innerHTML = "Max Amplitude: " + maxSpec;
+    specBar.rect(map(maxFre,0,spectrum.length,0,500)+3,0,5,100);
+    image(specBar,0,150,710,10);
+    fill(255,0,0);
+    document.getElementById('p5bar').innerHTML = "Dominant Frequency (Hz): " + int(maxFre*dF);
 }
-
-
